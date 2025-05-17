@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>My Futuristic Portfolio</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Audiowide&family=Montserrat:wght@300;700&display=swap');
+
+  :root {
+    --bg-color: #0a0a0a; /* Very dark black */
+    --primary-color: #ff3b3f; /* Bright red */
+    --secondary-color: #b22224; /* Darker red */
+    --accent-color: #ff2226; /* Intense red */
+    --text-color: #f0d6d6; /* Light pinkish gray for readability */
+    --shadow-color: rgba(255, 59, 63, 0.3); /* Red glow shadow */
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    scroll-behavior: smooth;
+    position: relative;
+    overflow-x: hidden;
+  }
+
+  /* Background neon orbs and lines container */
+  #background-animation {
+    position: fixed;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+  }
+
+  /* Neon orb style */
+  .neon-orb {
+    position: absolute;
+    border-radius: 50%;
+    box-shadow: 0 0 8px 3px var(--primary-color), 0 0 20px 6px var(--secondary-color);
+    opacity: 0.3;
+    animation-timing-function: ease-in-out;
+  }
+
+  /* Neon line style */
+  .neon-line {
+    position: absolute;
+    border-radius: 4px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    opacity: 0.25;
+    box-shadow: 0 0 10px var(--primary-color);
+    animation-timing-function: ease-in-out;
+  }
+
+  /* Animations */
+  @keyframes floatUpDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+
+  @keyframes floatLeftRight {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(25px); }
+  }
+
+  @keyframes floatDiagonal {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(15px,-15px); }
+  }
+
+  /* Apply different animations with different durations and delays */
+  #orb1 {
+    width: 40px; height: 40px;
+    top: 20%;
+    left: 10%;
+    animation: floatUpDown 6s infinite;
+    opacity: 0.4;
+  }
+  #orb2 {
+    width: 25px; height: 25px;
+    bottom: 15%;
+    right: 12%;
+    animation: floatLeftRight 8s infinite;
+    opacity: 0.3;
+  }
+  #orb3 {
+    width: 30px; height: 30px;
+    top: 60%;
+    left: 75%;
+    animation: floatDiagonal 7s infinite;
+    opacity: 0.35;
+  }
+  #orb4 {
+    width: 18px; height: 18px;
+    top: 80%;
+    left: 35%;
+    animation: floatUpDown 5s infinite;
+    opacity: 0.3;
+  }
+  #line1 {
+    width: 160px; height: 3px;
+    top: 40%;
+    left: 50%;
+    animation: floatLeftRight 9s infinite;
+  }
+  #line2 {
+    width: 100px; height: 4px;
+    top: 75%;
+    left: 15%;
+    animation: floatDiagonal 8s infinite;
+  }
+  #line3 {
+    width: 130px; height: 2.5px;
+    top: 30%;
+    left: 80%;
+    animation: floatUpDown 10s infinite;
+  }
+
+  /* Old radial background pattern, keep behind animations */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+      radial-gradient(circle at 10% 20%, #ff3b3f 2px, transparent 3px),
+      radial-gradient(circle at 20% 40%, #b22224 2px, transparent 3px),
+      radial-gradient(circle at 70% 80%, #ff2226 1.5px, transparent 2.5px);
+    background-size: 100px 100px;
+    z-index: 0;
+    opacity: 0.1;
+  }
+
+  header {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    background: rgba(10, 10, 10, 0.95);
+    backdrop-filter: blur(10px);
+    padding: 1rem 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    border-bottom: 1px solid var(--primary-color);
+  }
+
+  header h1 {
+    font-family: 'Audiowide', cursive;
+    font-weight: 400;
+    font-size: 1.8rem;
+    color: var(--primary-color);
+    cursor: default;
+    letter-spacing: 0.12em;
+  }
+
+  nav a {
+    color: var(--text-color);
+    text-decoration: none;
+    margin-left: 2rem;
+    font-weight: 700;
+    transition: color 0.3s ease;
+    font-size: 1rem;
+  }
+
+  nav a:hover {
+    color: var(--secondary-color);
+  }
+
+  main {
+    padding-top: 90px;
+    position: relative;
+    z-index: 10;
+  }
+
+  section {
+    padding: 6rem 3rem 4rem 3rem;
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Hero */
+  #hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    min-height: 85vh;
+    justify-content: center;
+    position: relative;
+  }
+
+  #hero h2 {
+    font-family: 'Audiowide', cursive;
+    font-weight: 400;
+    font-size: 3.25rem;
+    color: var(--primary-color);
+    margin: 0;
+    letter-spacing: 0.15em;
+    text-shadow: 0 0 10px var(--primary-color), 0 0 30px var(--primary-color);
+  }
+
+  #hero p {
+    max-width: 480px;
+    margin: 20px 0 40px;
+    font-size: 1.125rem;
+    line-height: 1.5;
+    color: var(--text-color);
+  }
+
+  #hero .btn {
+    padding: 0.75rem 2rem;
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--bg-color);
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    box-shadow: 0 0 10px var(--primary-color);
+    transition: box-shadow 0.3s ease;
+  }
+
+  #hero .btn:hover {
+    box-shadow: 0 0 30px var(--secondary-color);
+  }
+
+  /* About */
+  #about {
+    background: #1a1010;
+    border-radius: 15px;
+    box-shadow: 0 0 20px var(--shadow-color);
+  }
+
+  #about h3 {
+    font-family: 'Audiowide', cursive;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--secondary-color);
+    text-align: center;
+  }
+
+  #about p {
+    font-size: 1.125rem;
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--text-color);
+    text-align: center;
+  }
+
+  /* Photo Section */
+  #photo {
+    background: #1a1010;
+    border-radius: 15px;
+    box-shadow: 0 0 20px var(--shadow-color);
+    margin-top: 3rem;
+    text-align: center;
+    padding: 3rem 1rem;
+  }
+
+  #photo h3 {
+    font-family: 'Audiowide', cursive;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--secondary-color);
+  }
+
+  #photo .photo-container {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: 0 0 25px var(--primary-color);
+    border: 3px solid var(--primary-color);
+    background: #2a1818;
+  }
+
+  #photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Projects */
+  #projects {
+    margin-top: 3rem;
+  }
+
+  #projects h3 {
+    font-family: 'Audiowide', cursive;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--secondary-color);
+    text-align: center;
+  }
+
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit,minmax(280px,1fr));
+    gap: 2rem;
+  }
+
+  .project-card {
+    background: #1a1010;
+    border-radius: 12px;
+    padding: 1.5rem;
+    box-shadow: 0 0 15px var(--shadow-color);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+  }
+
+  .project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 0 35px var(--primary-color);
+  }
+
+  .project-card h4 {
+    color: var(--primary-color);
+    margin-bottom: 0.75rem;
+    font-family: 'Audiowide', cursive;
+  }
+
+  .project-card p {
+    color: var(--text-color);
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  /* Skills */
+  #skills {
+    background: #1a1010;
+    border-radius: 15px;
+    box-shadow: 0 0 20px var(--shadow-color);
+    margin-top: 4rem;
+    padding-bottom: 2rem;
+  }
+
+  #skills h3 {
+    font-family: 'Audiowide', cursive;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+    text-align: center;
+    padding-top: 2rem;
+  }
+
+  .skill-bar {
+    display: flex;
+    align-items: center;
+    margin: 1rem auto;
+    max-width: 700px;
+    gap: 1rem;
+  }
+
+  .skill-name {
+    flex: 2;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--text-color);
+  }
+
+  .bar-container {
+    flex: 5;
+    background: #2e1b1b;
+    border-radius: 30px;
+    overflow: hidden;
+  }
+
+  .bar {
+    display: block;
+    height: 14px;
+    border-radius: 30px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transition: width 0.6s ease;
+  }
+
+  /* Contact */
+  #contact {
+    margin-top: 4rem;
+    text-align: center;
+  }
+
+  #contact h3 {
+    font-family: 'Audiowide', cursive;
+    font-weight: 400;
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    color: var(--secondary-color);
+  }
+
+  #contact p {
+    font-size: 1.125rem;
+    margin-bottom: 2rem;
+    color: var(--text-color);
+  }
+
+  #contact a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 700;
+    background: rgba(255, 59, 63, 0.15);
+    padding: 0.75rem 1.5rem;
+    border-radius: 30px;
+    box-shadow: 0 0 15px var(--primary-color);
+    transition: box-shadow 0.3s ease;
+  }
+
+  #contact a:hover {
+    box-shadow: 0 0 30px var(--secondary-color);
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 6rem;
+    padding: 1rem 0;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-color);
+    border-top: 1px solid var(--primary-color);
+  }
+
+  footer a {
+    color: var(--primary-color);
+    margin: 0 0.5rem;
+    transition: color 0.3s ease;
+    text-decoration: none;
+  }
+
+  footer a:hover {
+    color: var(--secondary-color);
+  }
+
+  /* Responsive */
+
+  @media (max-width: 600px) {
+    header {
+      padding: 1rem 1.5rem;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    nav a {
+      margin-left: 1rem;
+      font-size: 0.9rem;
+    }
+
+    #hero h2 {
+      font-size: 2.4rem;
+    }
+
+    #hero p {
+      font-size: 1rem;
+    }
+
+    section {
+      padding: 4rem 1.5rem 3rem 1.5rem;
+    }
+
+    #photo .photo-container {
+      width: 140px;
+      height: 140px;
+    }
+  }
+</style>
+</head>
+<body>
+<div id="background-animation" aria-hidden="true">
+  <div class="neon-orb" id="orb1"></div>
+  <div class="neon-orb" id="orb2"></div>
+  <div class="neon-orb" id="orb3"></div>
+  <div class="neon-orb" id="orb4"></div>
+  <div class="neon-line" id="line1"></div>
+  <div class="neon-line" id="line2"></div>
+  <div class="neon-line" id="line3"></div>
+</div>
+<header>
+  <h1>Jay Jaiswal</h1>
+  <nav>
+    <a href="#hero">Home</a>
+    <a href="#about">About</a>
+    <a href="#photo">Photo</a>
+    <a href="#projects">Projects</a>
+    <a href="#skills">Skills</a>
+    <a href="#contact">Contact</a>
+  </nav>
+</header>
+<main>
+  <section id="hero" aria-label="Introduction">
+    <h2>Hello, I'm Jay Jaiswal</h2>
+    <p>Frontend developer crafting immersive, dynamic web experiences.</p>
+    <button class="btn" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Get in Touch</button>
+  </section>
+
+  <section id="about" aria-label="About Me">
+    <h3>About Me</h3>
+    <p>Hey, I'm Jay Jaiswal. I turn ideas into engaging visuals and impactful stories that inspire and solve real-world problems. Let's make something awesome together.</p>
+  </section>
+
+  <section id="photo" aria-label="My Photo">
+    <h3>My Photo</h3>
+    <div class="photo-container">
+      <img src="https://via.placeholder.com/300x300.png?text=Your+Photo+Here" alt="Your Photo" />
+    </div>
+  </section>
+
+  <section id="projects" aria-label="Projects Showcase">
+    <h3>Projects</h3>
+    <div class="projects-grid">
+      <div class="project-card" tabindex="0" role="article" aria-label="Project: Neural Interface Dashboard">
+        <h4>Neural Interface Dashboard</h4>
+        <p>A realtime neuro-data visualization dashboard with interactive holographic effects and intuitive UX.</p>
+      </div>
+      <div class="project-card" tabindex="0" role="article" aria-label="Project: CyberCity Website">
+        <h4>CyberCity Website</h4>
+        <p>A futuristic city tourism landing page with animated neon lights and seamless user flow.</p>
+      </div>
+      <div class="project-card" tabindex="0" role="article" aria-label="Project: HoloChat App">
+        <h4>HoloChat App</h4>
+        <p>A next-gen chat app with holographic UI components and AI-powered smart replies.</p>
+      </div>
+      <div class="project-card" tabindex="0" role="article" aria-label="Project: Quantum Portfolio Builder">
+        <h4>Quantum Portfolio Builder</h4>
+        <p>A drag-and-drop portfolio creator site with quantum-inspired animations and glowing UI.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="skills" aria-label="Skills">
+    <h3>Skills</h3>
+    <div class="skill-bar">
+      <div class="skill-name">HTML &amp; CSS</div>
+      <div class="bar-container"><span class="bar" style="width: 90%;"></span></div>
+    </div>
+    <div class="skill-bar">
+      <div class="skill-name">JavaScript</div>
+      <div class="bar-container"><span class="bar" style="width: 85%;"></span></div>
+    </div>
+    <div class="skill-bar">
+      <div class="skill-name">React &amp; Vue</div>
+      <div class="bar-container"><span class="bar" style="width: 75%;"></span></div>
+    </div>
+    <div class="skill-bar">
+      <div class="skill-name">UI/UX Design</div>
+      <div class="bar-container"><span class="bar" style="width: 80%;"></span></div>
+    </div>
+    <div class="skill-bar">
+      <div class="skill-name">Animations &amp; SVG</div>
+      <div class="bar-container"><span class="bar" style="width: 70%;"></span></div>
+    </div>
+  </section>
+
+  <section id="contact" aria-label="Contact">
+    <h3>Contact Me</h3>
+    <p>Feel free to reach out for collaborations, projects, or just to say hi!</p>
+    <a href="mailto:jayjaiswal742@gmail.com" aria-label="Send email to jayjaiswal742@gmail.com">jayjaiswal742@gmail.com</a>
+  </section>
+</main>
+<footer>
+  <p>© 2024 Jay Jaiswal | Connect: 
+    <a href="https://twitter.com/neondev" target="_blank" rel="noopener" aria-label="Twitter profile">Twitter</a> | 
+    <a href="https://github.com/neondev" target="_blank" rel="noopener" aria-label="GitHub profile">GitHub</a> | 
+    <a href="https://linkedin.com/in/neondev" target="_blank" rel="noopener" aria-label="LinkedIn profile">LinkedIn</a>
+  </p>
+</footer>
+</body>
+</html>
